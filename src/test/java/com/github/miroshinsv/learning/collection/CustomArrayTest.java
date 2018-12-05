@@ -10,7 +10,6 @@ public class CustomArrayTest {
     @Test
     public void testAdd() {
         instance.add(1);
-
         assertEquals(1, instance.get(0));
     }
 
@@ -18,21 +17,18 @@ public class CustomArrayTest {
     public void testContainsWithNull() {
         instance.add(1);
         instance.add(null);
-
         assertFalse(instance.contains(2));
     }
 
     @Test
     public void testContainsNull() {
         instance.add(1);
-
         assertFalse(instance.contains(null));
     }
 
     @Test
     public void testArrayWithNullContainsNull() {
         instance.add(null);
-
         assertTrue(instance.contains(null));
     }
 }

@@ -1,9 +1,6 @@
 package com.github.miroshinsv.learning.collection;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
+import java.util.*;
 
 public class CustomArray<T> implements List {
     private int capacity;
@@ -35,9 +32,21 @@ public class CustomArray<T> implements List {
 
     @Override
     public boolean contains(Object o) {
-        for (int i = 0; i < size; i++) {
-            if (t[i].equals(o)){
-                return true;
+        if(o == null){
+            for (int i = 0; i < size; i++) {
+                if (t[i] == null) {
+                    return true;
+                }
+            }
+        }else {
+            for (int i = 0; i < size; i++) {
+                if (t[i] == null){
+                    if (t[i] == o) {
+                        return true;
+                    }
+                }else if (t[i].equals(o)) {
+                    return true;
+                }
             }
         }
         return false;
@@ -75,7 +84,7 @@ public class CustomArray<T> implements List {
         if (size >= capacity) {
             t = (T[]) new Object[capacity + capacity/2];
         }
-        t[size+1] = (T) o;
+        t[size] = (T) o;
         size++;
         return true;
     }
