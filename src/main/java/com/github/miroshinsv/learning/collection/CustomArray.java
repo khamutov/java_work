@@ -22,6 +22,7 @@ public class CustomArray<T> implements List {
 
     @Override
     public int size() {
+
         return size;
     }
 
@@ -92,6 +93,17 @@ public class CustomArray<T> implements List {
     @Override
     public boolean remove(Object o) {
         boolean found = false;
+        if(o == null){
+            for (int i = 0; i < size; i++) {
+                if (t[i] == null & t[i] == o && !found) {
+                    found = true;
+                    continue;
+                }
+                if (found){
+                    t[i-1] = t[i];
+                }
+            }
+        }
         for (int i = 0; i < size; i++) {
             if (t[i].equals(o) && !found){
                 found = true;
@@ -101,7 +113,7 @@ public class CustomArray<T> implements List {
                 t[i-1] = t[i];
             }
         }
-        size--;
+        if (found){size--;}
         return found;
     }
 
