@@ -105,7 +105,7 @@ public class LinkedTest {
     @Test
     public void checkContainsFalse(){
         linked.add("a");
-        Assert.assertFalse(linked.contains("a"));
+        Assert.assertFalse(linked.contains("b"));
     }
 
 
