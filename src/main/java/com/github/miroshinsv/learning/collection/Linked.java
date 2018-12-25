@@ -3,25 +3,24 @@ package com.github.miroshinsv.learning.collection;
 import java.util.*;
 
 public class Linked<T> implements List {
-    private static Linked first;
     private int size;
-
+    private Linked first;
     private Linked next;
     private Object value;
 
-    public Linked(){
-        first = this;
+    public Linked() {
+        this.first = this;
         this.next = null;
     }
 
-    private Linked(Object o){
-        this.value = o;
+    private Linked(Linked first) {
+        this.first = first;
+        this.next = null;
     }
 
     private Object getValue() {
         return value;
     }
-
 
     @Override
     public int size() {
@@ -36,8 +35,8 @@ public class Linked<T> implements List {
     @Override
     public boolean contains(Object o) {
         Linked temp = first;
-        while (temp.next !=null){
-            if (temp.getValue().equals(o)){
+        while (temp.next != null) {
+            if (temp.getValue().equals(o)) {
                 return true;
             }
             temp = next;
@@ -47,19 +46,17 @@ public class Linked<T> implements List {
 
     @Override
     public Iterator iterator() {
+        Linked temp = first;
         Iterator iterator = new Iterator() {
-            int count =0;
-            Linked temp = first;
             @Override
             public boolean hasNext() {
-                return size > count;
+                return temp.next != null;
             }
 
             @Override
             public Object next() {
-                count++;
                 return temp.next;
-            };
+            }
         };
         return iterator;
     }
@@ -71,34 +68,40 @@ public class Linked<T> implements List {
 
     @Override
     public boolean add(Object o) {
-        if (o == null) return false;
-
         Linked temp = first;
-
-        while (temp.next != null){
+        while (temp.next != null) {
             temp = temp.next;
         }
         temp.value = (T) o;
-        temp.next = new Linked(o);
+        temp.next = new Linked(first);
         size++;
         return true;
     }
 
     @Override
     public boolean remove(Object o) {
-        if (o == null){
-            return false;
-        }
-        if (first.getValue().equals(o)){
-            --size;
-            first = next;
+        if (this.getValue().equals(o)){
+            this.first = next;
             return true;
         }
 
         Linked temp = first;
-        while (temp.next != null){
-            if (temp.next.getValue().equals(o)){
-                --size;
+
+        while (temp.next != null) {
+            if (o == null){
+                if (temp.next.getValue() == null){
+                    size--;
+                    if (temp.next.next == null) {
+                        temp.next = null;
+                        return true;
+                    } else {
+                        temp.next = temp.next.next;
+                        return true;
+                    }
+                }
+            }
+            if (temp.next.getValue().equals(o)) {
+                size--;
                 if (temp.next.next == null) {
                     temp.next = null;
                     return true;
@@ -109,7 +112,6 @@ public class Linked<T> implements List {
             }
             temp = temp.next;
         }
-
         return false;
     }
 
@@ -130,10 +132,11 @@ public class Linked<T> implements List {
 
     @Override
     public Object get(int index) {
-        if (index > size-1) throw new IndexOutOfBoundsException();
+        if (index > size - 1) throw new IndexOutOfBoundsException();
+
         int counter = 0;
         Linked temp = first;
-        while (counter != index){
+        while (counter != index) {
             counter++;
             temp = temp.next;
         }
@@ -147,12 +150,12 @@ public class Linked<T> implements List {
 
     @Override
     public void add(int index, Object element) {
-        if (index > size-1){
+        if (index > size - 1) {
             throw new IndexOutOfBoundsException();
         }
         Linked temp = first;
         int count = 0;
-        while (index!=count){
+        while (index != count) {
             temp = next;
             count++;
         }
@@ -161,15 +164,17 @@ public class Linked<T> implements List {
 
     @Override
     public Object remove(int index) {
-        if (index>size-1){throw new IndexOutOfBoundsException();}
-        --size;
+        if (index > size - 1) {
+            throw new IndexOutOfBoundsException();
+        }
+        size--;
         if (index == 0) {
             first = next;
             return true;
         }
-        int count =1;
+        int count = 1;
         Linked temp = first;
-        while (count!=index){
+        while (count != index) {
             temp = next;
         }
         if (temp.next.next == null) {

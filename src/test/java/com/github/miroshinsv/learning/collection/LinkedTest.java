@@ -64,6 +64,17 @@ public class LinkedTest {
     }
 
     @Test
+    public void checkRemoveNull(){
+        linked.add("a");
+        linked.add(null);
+        linked.add("c");
+        linked.remove(null);
+        Assert.assertEquals(linked.get(0),"a");
+        Assert.assertEquals(linked.get(1),"c");
+    }
+
+
+    @Test
     public void checkAddByIndex(){
         linked.add("a");
         linked.add("b");
@@ -73,6 +84,19 @@ public class LinkedTest {
         Assert.assertEquals(linked.get(1),"b");
         Assert.assertEquals(linked.get(2),"c");
     }
+
+
+    @Test
+    public void checkAddNull(){
+        linked.add("a");
+        linked.add("b");
+        linked.add(null);
+        linked.add(0,"c");
+        Assert.assertEquals(linked.get(0),"c");
+        Assert.assertEquals(linked.get(1),"b");
+        Assert.assertNull(linked.get(2));
+    }
+
 
     @Test
     public void checkRemoveByIndex(){
