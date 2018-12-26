@@ -46,8 +46,9 @@ public class Linked<T> implements List {
 
     @Override
     public Iterator iterator() {
-        Linked temp = first;
         Iterator iterator = new Iterator() {
+            Linked temp = first;
+
             @Override
             public boolean hasNext() {
                 return temp.next != null;
